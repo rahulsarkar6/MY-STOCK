@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Login</title>
+	
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.css"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"></link>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	
+	
+	
+</h:head>
+<h:body>
+	<div class="container" align="center">
+		<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
+			<div class="jumbotron">
+			
+						
+							<h:form styleClass="form-horizontal">
+								<h3>User Login</h3>
+								<div class="form-group">
+								<h:outputText value="Username" styleClass="control-label col-sm-2">Username</h:outputText>
+								<h:inputText id="username" value="#{user.username}" styleClass="form-control" required="true" requiredMessage="Please enter username"></h:inputText>
+								<h:message for="username"></h:message>
+								</div>
+								
+								
+								<div class="form-group">
+								<h:outputText value="Password" styleClass="control-label col-sm-2">Password</h:outputText>
+								<h:inputSecret id="password" value="#{user.password}" styleClass="form-control" required="true" requiredMessage="Please enter password"></h:inputSecret>
+								<h:message for="password"></h:message>
+								</div>
+								<br></br>
+								
+								<h:commandButton action="#{user.validateUsernamePassword}"
+									class="btn btn-primary" value="Login"></h:commandButton>
+									<font color="blue"><h:messages></h:messages></font>
+							</h:form>
+							
+							<tr align="right">If not registered <a href="Register.xhtml">Click Here</a></tr>	
+					
+				</div>	
+			</div>		
+		</div>					
+</h:body>
+</html>

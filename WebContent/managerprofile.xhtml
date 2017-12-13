@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Manager Profile</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.css"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"></link>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	
+</h:head>
+<h:body>
+
+	<h:form>
+	<h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
+		<p>Welcome #{user.name}</p>
+		<br/>
+		
+		<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
+									<font color="blue"></font>
+		
+		<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
+									<font color="blue"></font>
+									
+		<h:commandButton class="btn btn-primary" value="View Managers" action="managerprofile"></h:commandButton>
+									<font color="blue"></font>	
+									
+	</h:form>
+
+
+	<div class="container" align="center">
+		<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
+			<div class="jumbotron">
+			
+						
+							<h:form styleClass="form-horizontal" action="#{manager.mang}">
+								<h:dataTable value="#{manager.mang}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+											
+											<h:column>    				
+							              		<f:facet name="header">Manager Id</f:facet>
+							    				<h:outputText value=" #{m.mid}"></h:outputText>
+							    			</h:column>
+											
+											<h:column>    				
+							              		<f:facet name="header">Name</f:facet>
+							    				<h:outputText value=" #{m.name}"></h:outputText>
+							    			</h:column>		
+							            	
+							            	<h:column>    				
+							              		<f:facet name="header">Email Id</f:facet>
+							    				<h:outputText value=" #{m.emailid}"></h:outputText>
+							    			</h:column>
+							    			
+							    			<h:column>    				
+							              		<f:facet name="header">Company</f:facet>
+							    				<h:outputText value=" #{m.company}"></h:outputText>
+							    			</h:column>
+							    			
+							    				
+											</h:dataTable>
+											
+											
+							</h:form>
+							
+							<div class="container" align="center">
+								<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
+									<div class="jumbotron">
+			
+							
+							<h:form styleClass="form-horizontal" action="{user.userdetails}">
+							
+		
+								<p>Manager ID: <h:inputText value="#{user.mid}"></h:inputText></p>
+								
+								<h:commandButton action="#{user.assignmanager}"
+									class="btn btn-primary" value="Assign"></h:commandButton>
+									<font color="blue"><h:messages></h:messages></font>
+							</h:form>
+							
+								
+					
+				</div>	
+			</div>		
+		</div>	
+					
+				</div>	
+			</div>		
+		</div>					
+</h:body>
+</html>
