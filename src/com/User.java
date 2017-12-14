@@ -39,8 +39,31 @@ public class User implements Serializable {
     private String password;
     private String uid;
     private String mid;
+    private Double balance;
     
-    public String getMid() {
+    
+    
+    public Double getBalance() {
+		return balance;
+	}
+
+
+
+
+
+
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+
+
+
+
+
+
+	public String getMid() {
 		return mid;
 	}
 
@@ -379,7 +402,23 @@ public String assignmanager() {
 		return "managerprofile";
    }
 
-	
+	public Double viewbalance() {
+		Connection con = DBConnection.createConnection();
+		Double balance = null;
+		try {
+			
+			String sql = "Select balance from users where username = ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, this.username);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			 balance =  rs.getDouble("balance");
+			
+		}catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		}
+		return balance;
+	}
     
     
 }

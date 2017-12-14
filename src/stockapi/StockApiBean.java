@@ -7,6 +7,7 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -199,8 +200,19 @@ public class StockApiBean {
             System.out.println("price:" + price);
             System.out.println("qty:" + qty);
             System.out.println("amt:" + amt);
-            statement.executeUpdate("INSERT INTO `purchase` (`id`, `uid`, `stock_symbol`, `qty`, `price`, `amt`) "
-                    + "VALUES (NULL,'" + uid + "','" + symbol + "','" + qty + "','" + price + "','" + amt +"')");
+            statement.executeUpdate("INSERT INTO `purchase` (`id`, `uid`, `stock_symbol`, `qty`, `price`, `amt`, date) "
+                    + "VALUES (NULL,'" + uid + "','" + symbol + "','" + qty + "','" + price + "','" + amt +"', CURRENT_TIMESTAMP() )");
+            
+            Double balance = null;
+            ResultSet rs=  statement.executeQuery("select balance from users where uid = '"+ uid +"' ");
+            rs.next();
+            balance = rs.getDouble("balance");
+            System.out.println(balance);
+            balance = balance - amt;
+            statement.executeUpdate("INSERT INTO `user_balance` (`uid`, `balance`) "
+                    + "VALUES ('" + uid + "','"+ balance +"' )");
+            System.out.println(balance);
+            statement.executeUpdate("Update users set balance= '"+ balance +"' where uid = '"+ uid +"' ");
             
             statement.close();
             conn.close();

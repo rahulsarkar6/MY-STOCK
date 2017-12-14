@@ -47,13 +47,6 @@ public class Manager implements Serializable {
 	//public String PASS = "admin";
 
     
-    
-    
-    
-    
-    
-    
-    
     public Manager getSelectedManager() {
 		return selectedManager;
 	}
@@ -287,7 +280,7 @@ public class Manager implements Serializable {
 	//con = ds.getConnection();
 
 	
-	String sql = "select * from manager";
+	String sql = "select * from manager where status = 1";
 	
 	//PreparedStatement st = con.prepareStatement(sql);
 	Statement stm=null;
