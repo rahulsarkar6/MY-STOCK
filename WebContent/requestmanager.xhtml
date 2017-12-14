@@ -23,19 +23,19 @@
 		<br/>
 		
 		<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+									<font color="blue"></font>
 									
 		<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+									<font color="blue"></font>
 									
 		<h:commandButton class="btn btn-primary" value="View Managers" action="#{user.checkmanager}"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>		
+									<font color="blue"></font>		
 														
 		<h:commandButton class="btn btn-primary" value="View Account Balance" action="viewuserbalance"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+									<font color="blue"></font>
 									
 		<h:commandButton class="btn btn-primary" value="Request Manager" action="requestmanager"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+									<font color="blue"></font>
 									
 	</h:form>
 	
@@ -43,41 +43,66 @@
 	<div class="container" align="center">
 		<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
 			<div class="jumbotron">
-				<p>Your current Account Balance is : #{user.viewbalance()}</p>
 				
 				
-			
-						<p>Your Account History : </p>
-							<h:form styleClass="form-horizontal" action="#{purchase.purchase}">
-								<h:dataTable value="#{purchase.purchase}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+							<h:form styleClass="form-horizontal" action="#{manager.showmanager}">
+								<h:dataTable value="#{manager.showmanager}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
 											
 											<h:column>    				
-							              		<f:facet name="header">Stock Name</f:facet>
-							    				<h:outputText value=" #{m.stock_symbol}"></h:outputText>
+							              		<f:facet name="header">Manager Id</f:facet>
+							    				<h:outputText value=" #{m.mid}"></h:outputText>
 							    			</h:column>
 											
 											<h:column>    				
-							              		<f:facet name="header">Quantity</f:facet>
-							    				<h:outputText value=" #{m.qty}"></h:outputText>
+							              		<f:facet name="header">Name</f:facet>
+							    				<h:outputText value=" #{m.name}"></h:outputText>
 							    			</h:column>		
 							            	
 							            	<h:column>    				
-							              		<f:facet name="header">Purchase Date</f:facet>
-							    				<h:outputText value=" #{m.date}"></h:outputText>
+							              		<f:facet name="header">Email Id</f:facet>
+							    				<h:outputText value=" #{m.emailid}"></h:outputText>
 							    			</h:column>
 							    			
 							    			<h:column>    				
-							              		<f:facet name="header">Purchase Amount</f:facet>
-							    				<h:outputText value=" #{m.amt}"></h:outputText>
+							              		<f:facet name="header">Company</f:facet>
+							    				<h:outputText value=" #{m.company}"></h:outputText>
+							    			</h:column>
+							    			
+							    			<h:column>    				
+							              		<f:facet name="header">Fees</f:facet>
+							    				<h:outputText value=" #{m.fees}"></h:outputText>
 							    			</h:column>
 							    			
 											</h:dataTable>
+											
+											
 							</h:form>
-				
+				<br />
+				<br />
+				<h:form styleClass="form-horizontal" action="{user.userdetails}">
+							
+		
+								<p>Quantity of Stock: <h:inputText value="#{user.qty}"></h:inputText></p>
+								
+								<h:commandButton action="#{user.request}"
+									class="btn btn-primary" value="Request"></h:commandButton>
+									<font color="blue"><h:messages></h:messages></font>
+							</h:form>
+			
+			
 			</div>
 		</div>
 	</div>
 	
 	</h:body>
 </html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	

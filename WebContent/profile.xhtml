@@ -27,10 +27,13 @@
 		<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
 									<font color="blue"></font>
 									
-		<h:commandButton class="btn btn-primary" value="View Managers" action="managerprofile"></h:commandButton>
+		<h:commandButton class="btn btn-primary" value="View Managers" action="#{user.checkmanager}"></h:commandButton>
 									<font color="blue"></font>	
 									
 		<h:commandButton class="btn btn-primary" value="View Account Balance" action="viewuserbalance"></h:commandButton>
+									<font color="blue"><h:messages></h:messages></font>
+									
+		<h:commandButton class="btn btn-primary" value="Request Manager" action="requestmanager"></h:commandButton>
 									<font color="blue"><h:messages></h:messages></font>
 									
 	</h:form>

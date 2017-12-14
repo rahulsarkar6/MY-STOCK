@@ -38,6 +38,8 @@ public class Manager implements Serializable {
     private String company;
     private int mid;
     private int status;
+    private int fees;
+    
     List<Manager> mgr= new ArrayList<Manager>();
     private Manager selectedManager = null;
     
@@ -47,8 +49,23 @@ public class Manager implements Serializable {
 	//public String PASS = "admin";
 
     
+    
+    
+    
     public Manager getSelectedManager() {
 		return selectedManager;
+	}
+
+
+
+	public int getFees() {
+		return fees;
+	}
+
+
+
+	public void setFees(int fees) {
+		this.fees = fees;
 	}
 
 
@@ -71,7 +88,7 @@ public class Manager implements Serializable {
 
 
 
-	public Manager(String name, String emailid, String username, String password, String company, int mid) {
+	public Manager(String name, String emailid, String username, String password, String company, int mid, int fees) {
 	super();
 	this.name = name;
 	this.emailid = emailid;
@@ -79,6 +96,7 @@ public class Manager implements Serializable {
 	this.password = password;
 	this.company = company;
 	this.mid = mid;
+	this.fees = fees;
 }
 
 
@@ -464,5 +482,55 @@ public String updatedetails() {
 	
 	return mgr;
 	}
+	
+	public List<Manager> getShowmanager() throws SQLException {
+		mgr.clear();
+
+		Connection con = DBConnection.createConnection();
+//		Connection con = null;
+//		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//		ds.setServerName(System.getenv("ICSI518_SERVER"));
+//		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//		ds.setUser(System.getenv("ICSI518_USER").toString());
+//		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+//		
+//		
+//		con = ds.getConnection();
+
+
+		System.out.println("Hello in showmanager");
+		Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("uid"));
+	String sql = "select * from manager where mid = (select mid from users where uid = '"+ uid +"')";
+	
+	//PreparedStatement st = con.prepareStatement(sql);
+	Statement stm=null;
+	stm=(Statement) con.createStatement();
+	
+	
+	
+	
+	ResultSet rs=stm.executeQuery(sql);
+	while(rs.next())
+	{
+		Manager m=new Manager();
+		m.setName(rs.getString("name"));
+		m.setEmailid(rs.getString("emailid"));
+		m.setCompany(rs.getString("company"));
+		m.setMid(rs.getInt("mid"));
+		m.setFees(rs.getInt("fees"));
+		//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+		mgr.add(m);
+		
+	}
+	con.close();
+	stm.close();
+	
+	
+	return mgr;
+	}
+	
     
 }

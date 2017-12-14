@@ -40,10 +40,30 @@ public class User implements Serializable {
     private String uid;
     private String mid;
     private Double balance;
+    private int qty;
     
     
-    
-    public Double getBalance() {
+    public int getQty() {
+		return qty;
+	}
+
+
+
+
+
+
+
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+
+
+
+
+
+
+
+	public Double getBalance() {
 		return balance;
 	}
 
@@ -383,6 +403,8 @@ public String assignmanager() {
 //    		
 //			con = ds.getConnection();
     		
+    		
+    		
 			String sql = "Update users set mid=? where username = ?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, this.mid);
@@ -420,5 +442,99 @@ public String assignmanager() {
 		return balance;
 	}
     
+	public String checkmanager() {
+		
+		Connection con = DBConnection.createConnection();
+		try {
+			
+			String sql = "select * from users where username = ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, this.username);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			Integer c = rs.getInt("mid");
+			System.out.println(c);
+			
+			if (c== 0) {
+				
+				return "managerprofile";
+				
+			} else {
+				
+				return "managerprofile1";
+				
+				
+			}
+			
+		}catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		}
+		return "managerprofile";
+		
+	}
+	
+	public String request() {
+    	
+
+		
+    	Connection con = DBConnection.createConnection();
+    	try {
+    		
+
+    		
+//    		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//			ds.setServerName(System.getenv("ICSI518_SERVER"));
+//			ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//			ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//			ds.setUser(System.getenv("ICSI518_USER").toString());
+//			ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+    	
+//			con = ds.getConnection();
+    		
+    		
+    		Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("uid"));
+    		
+    		Integer mid = null;
+    		String sql1 = "select mid from users where uid = '"+ uid +"' ";
+    		PreparedStatement ps = con.prepareStatement(sql1);
+    		ResultSet rs = ps.executeQuery();
+    		rs.next();
+    		mid = rs.getInt("mid");
+    		String sql = "insert into request(uid,mid,qty) values(?,?,?)";
+			
+
+			// Get a prepared SQL statement
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, uid);
+			st.setInt(2, mid);
+			st.setInt(3, this.qty);
+			
+			
+			// Execute the statement
+			st.executeUpdate();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Request stock Successful",
+							"Please enter username and Password to login"));
+			return "requestmanager";
+			
+			
+		} catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "requestmanager";
+		
+    }
+	
     
 }

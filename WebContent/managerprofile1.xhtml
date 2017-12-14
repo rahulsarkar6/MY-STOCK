@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>Welcome</title>
-	
+	<title>Manager Profile</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	
@@ -16,68 +15,85 @@
 	
 </h:head>
 <h:body>
-	
+
 	<h:form>
-		<h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
+	<h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
 		<p>Welcome #{user.name}</p>
 		<br/>
 		
 		<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
-									
+									<font color="blue"></font>
+		
 		<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+									<font color="blue"></font>
 									
 		<h:commandButton class="btn btn-primary" value="View Managers" action="#{user.checkmanager}"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>		
-														
+									<font color="blue"></font>	
+		
 		<h:commandButton class="btn btn-primary" value="View Account Balance" action="viewuserbalance"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
-									
+									<font color="blue"></font>
+												
 		<h:commandButton class="btn btn-primary" value="Request Manager" action="requestmanager"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
-									
+									<font color="blue"></font>
 	</h:form>
-	
-	
+
 	<div class="container" align="center">
-		<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
+		<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
 			<div class="jumbotron">
-				<p>Your current Account Balance is : #{user.viewbalance()}</p>
-				
-				
 			
-						<p>Your Account History : </p>
-							<h:form styleClass="form-horizontal" action="#{purchase.purchase}">
-								<h:dataTable value="#{purchase.purchase}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+							<h2>Manager List</h2>
+							<h:form styleClass="form-horizontal" action="#{manager.mang}">
+								<h:dataTable value="#{manager.mang}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
 											
 											<h:column>    				
-							              		<f:facet name="header">Stock Name</f:facet>
-							    				<h:outputText value=" #{m.stock_symbol}"></h:outputText>
+							              		<f:facet name="header">Manager Id</f:facet>
+							    				<h:outputText value=" #{m.mid}"></h:outputText>
 							    			</h:column>
 											
 											<h:column>    				
-							              		<f:facet name="header">Quantity</f:facet>
-							    				<h:outputText value=" #{m.qty}"></h:outputText>
+							              		<f:facet name="header">Name</f:facet>
+							    				<h:outputText value=" #{m.name}"></h:outputText>
 							    			</h:column>		
 							            	
 							            	<h:column>    				
-							              		<f:facet name="header">Purchase Date</f:facet>
-							    				<h:outputText value=" #{m.date}"></h:outputText>
+							              		<f:facet name="header">Email Id</f:facet>
+							    				<h:outputText value=" #{m.emailid}"></h:outputText>
 							    			</h:column>
 							    			
 							    			<h:column>    				
-							              		<f:facet name="header">Purchase Amount</f:facet>
-							    				<h:outputText value=" #{m.amt}"></h:outputText>
+							              		<f:facet name="header">Company</f:facet>
+							    				<h:outputText value=" #{m.company}"></h:outputText>
 							    			</h:column>
 							    			
+							    				
 											</h:dataTable>
+											
+											
 							</h:form>
-				
-			</div>
-		</div>
-	</div>
+							
+							<div class="container" align="center">
+								<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
+									<div class="jumbotron">
+			
+							
+										<h:form styleClass="form-horizontal" >
+										
+					
+											<h4>Assigned Manager Details: </h4>
+											<p>Manager ID: #{user.mid}</p>
+											
+											
+										</h:form>
+										
+								
+								
+							</div>	
+						</div>		
+					</div>	
+								
+				</div>	
+			</div>		
+		</div>	
 	
-	</h:body>
+</h:body>
 </html>
-	
