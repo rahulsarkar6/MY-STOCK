@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-
+import com.*;
 import javax.faces.*;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -41,7 +41,11 @@ public class Manager implements Serializable {
     private int fees;
     
     List<Manager> mgr= new ArrayList<Manager>();
-    private Manager selectedManager = null;
+    List<User> user = new ArrayList<User>();
+   
+
+
+	private Manager selectedManager = null;
     
    // public String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	//public String DB_URL="jdbc:mysql://localhost:3306/SE2";
@@ -242,8 +246,10 @@ public class Manager implements Serializable {
     		if (rs.next()) {
 				System.out.println("Name is: " + rs.getString("name"));
 				this.name = rs.getString("name");
-				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", username);
+				//HttpSession session = SessionUtils.getSession();
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("mid", rs.getString("mid"));
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", rs.getString("username"));
+				//session.setAttribute("username", username);
 				return "managerdashboard";
     		}
     		
@@ -532,5 +538,58 @@ public String updatedetails() {
 	return mgr;
 	}
 	
-    
-}
+	 public List<User> getUser() throws SQLException {
+	    	Connection con = null;
+			com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+			ds.setServerName(System.getenv("ICSI518_SERVER"));
+			ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+			ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+			ds.setUser(System.getenv("ICSI518_USER").toString());
+			ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+			
+			
+			con = ds.getConnection();
+
+
+			System.out.println("Hello in showrequest");
+			
+			
+			Integer m = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("mid"));
+			
+			System.out.println(m);
+			
+			String sql = "select * from request where mid = '"+ m +"'";
+		
+			//PreparedStatement st = con.prepareStatement(sql);
+			Statement stm=null;
+			stm=(Statement) con.createStatement();
+		
+		
+		
+		
+			ResultSet rs=stm.executeQuery(sql);
+			user.clear();
+			while(rs.next())
+			{
+				User u=new User();
+				u.setUid(rs.getString("uid"));
+				u.setQty(rs.getInt("qty"));
+				
+				
+				//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+				user.add(u);
+				
+			}
+			con.close();
+			stm.close();
+			
+			
+			return user;
+			}
+	    
+		}
+
+	
+		

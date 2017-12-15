@@ -48,29 +48,13 @@ public class User implements Serializable {
 	}
 
 
-
-
-
-
-
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
 
-
-
-
-
-
-
 	public Double getBalance() {
 		return balance;
 	}
-
-
-
-
-
 
 
 	public void setBalance(Double balance) {
@@ -518,7 +502,7 @@ public String assignmanager() {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Request stock Successful",
+							"Stock Requested Successfully",
 							"Please enter username and Password to login"));
 			return "requestmanager";
 			

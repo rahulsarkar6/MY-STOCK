@@ -71,26 +71,46 @@
 											
 							</h:form>
 							
-							<div class="container" align="center">
-								<div class="col-sm-10" style="width: 600px; margin-left: 250; margin-top:20px">
-									<div class="jumbotron">
-			
 							
-										<h:form styleClass="form-horizontal" >
-										
-					
-											<h4>Assigned Manager Details: </h4>
-											<p>Manager ID: #{user.mid}</p>
-											
-											
+							
+									<h4>Your Manager Details: </h4>
+									<h:form styleClass="form-horizontal" action="#{manager.showmanager}">
+										<h:dataTable value="#{manager.showmanager}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+														
+														<h:column>    				
+										              		<f:facet name="header">Manager Id</f:facet>
+										    				<h:outputText value=" #{m.mid}"></h:outputText>
+										    			</h:column>
+														
+														<h:column>    				
+										              		<f:facet name="header">Name</f:facet>
+										    				<h:outputText value=" #{m.name}"></h:outputText>
+										    			</h:column>		
+										            	
+										            	<h:column>    				
+										              		<f:facet name="header">Email Id</f:facet>
+										    				<h:outputText value=" #{m.emailid}"></h:outputText>
+										    			</h:column>
+										    			
+										    			<h:column>    				
+										              		<f:facet name="header">Company</f:facet>
+										    				<h:outputText value=" #{m.company}"></h:outputText>
+										    			</h:column>
+										    			
+										    			<h:column>    				
+										              		<f:facet name="header">Fees</f:facet>
+										    				<h:outputText value=" #{m.fees}"></h:outputText>
+										    			</h:column>
+										    			
+														</h:dataTable>
+														
+														
 										</h:form>
 										
+										
 								
 								
-							</div>	
-						</div>		
-					</div>	
-								
+							
 				</div>	
 			</div>		
 		</div>	
