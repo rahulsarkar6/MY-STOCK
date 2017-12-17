@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Purchase Stock</title>
@@ -21,19 +22,14 @@
         </script>
     </h:head>
     <body>
-        <!-- Add your site or application content here -->
-        <div class="wrapper">
-
-            <div class="container bootstrap snippet">
-                <div class="row">
-                    <div class="col-sm-10">
-                        <h1>
+       
+                        <p>
                             Welcome <h:outputText value="#{sessionScope.username}" />
-                        </h1>
+                        </p>
                         <h:form>
                         <h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
                         </h:form>
-                    </div>
+                
                     
                     <h:form>
 						
@@ -47,9 +43,36 @@
 														
 							<h:commandButton class="btn btn-primary" value="Client Requests" action="clientrequest"></h:commandButton>
 														<font color="blue"></font>
-														
+							
+							<h:commandButton class="btn btn-primary" value="Client Requests" action="clientrequest"></h:commandButton>
+														<font color="blue"></font>
+																					
 						</h:form>
 			
+			
+			<div class="container" align="center">
+				<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
+					<div class="jumbotron">
+							<h2>Request Details</h2>
+							<h:form styleClass="form-horizontal" >
+												<h:dataTable value="#{manager.user}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+													
+													<h:column>    				
+									              		<f:facet name="header">User Id</f:facet>
+									    				<h:outputText value=" #{m.uid}"></h:outputText>
+									    			</h:column>
+													
+													<h:column>    				
+									              		<f:facet name="header">Stock Quantity</f:facet>
+									    				<h:outputText value=" #{m.qty}"></h:outputText>
+									    			</h:column>		
+									     
+									     </h:dataTable>
+											
+									</h:form>
+					</div>
+				</div>
+			</div>
 			<div class="container" align="center">
 				<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
 					<div class="jumbotron">
@@ -70,12 +93,6 @@
                     </div>
                    </div>
                   </div>
-                  
-                    
-                    
-                    
-                </div>
-            </div>
-        </div>
+      
     </body>
 </html>

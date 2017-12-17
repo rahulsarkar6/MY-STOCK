@@ -33,7 +33,7 @@ import com.login.DataConnect;
 
 @ManagedBean
 @SessionScoped
-public class StockApiBean1 {
+public class StockApiBean2 {
 
     private static final long serialVersionUID = 1L;
     static final String API_KEY = "AF93E6L5I01EA39O";
@@ -42,7 +42,6 @@ public class StockApiBean1 {
     private double price;
     private int qty;
     private double amt;
-    private int uid;
     private String table1Markup;
     private String table2Markup;
 
@@ -56,24 +55,7 @@ public class StockApiBean1 {
         return symbol;
     }
     
-    
-    
-    
-    public int getUid() {
-		return uid;
-	}
-
-
-
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-
-
-
-
-	public void setPurchaseSymbol(String purchaseSymbol) {
+    public void setPurchaseSymbol(String purchaseSymbol) {
         System.out.println("func setPurchaseSymbol()");  //check
     }
 
@@ -117,6 +99,15 @@ public class StockApiBean1 {
         availableIntervals.add(new SelectItem("60min", "60min"));
     }
 
+    // drop down values
+    
+    
+    
+    
+    
+    
+    
+    
     private String selectedInterval;
     private List<SelectItem> availableIntervals;
 
@@ -200,7 +191,7 @@ public class StockApiBean1 {
         this.table2Markup = table2Markup;
     }
 
-    public String createDbRecord(String symbol, double price, int qty, double amt, int uid) {
+    public String createDbRecord(String symbol, double price, int qty, double amt) {
         try {
             //System.out.println("symbol: " + this.symbol + ", price: " + this.price + "\n");
             //System.out.println("qty: " + this.qty + ", amt: " + this.amt + "\n");
@@ -208,57 +199,69 @@ public class StockApiBean1 {
             Connection conn = DBConnection.createConnection();
             Statement statement = conn.createStatement();
             
-            //get mid
-            Integer m = Integer.parseInt((String) FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .getSessionMap().get("mid"));
-            System.out.println(m);
-            
             //get userid
+            Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("uid"));
             
             System.out.println(uid);
             System.out.println("symbol:" + symbol);
             System.out.println("price:" + price);
             System.out.println("qty:" + qty);
             System.out.println("amt:" + amt);
-            statement.executeUpdate("INSERT INTO `purchase` (`id`, `uid`, `stock_symbol`, `qty`, `price`, `amt`, date, mid) "
-                    + "VALUES (NULL,'" + uid + "','" + symbol + "','" + qty + "','" + price + "','" + amt +"', CURRENT_TIMESTAMP(), '"+ m +"' )");
             
-            //get manager fees
+            Integer pqty = 0;
+            Integer pqty1 = 0;
             
-            Integer fees = null;
-            Integer acbal = null;
-            ResultSet rs1 = statement.executeQuery("select fees,accountbalance from manager where mid = '"+ m +"' ");
-            rs1.next();
-            fees = rs1.getInt("fees");
-            System.out.println(fees);
+            // get purchased stocks
+            ResultSet rs2=  statement.executeQuery("select qty from purchase where uid = '"+ uid +"' and stock_symbol = '"+ symbol +"'; ");
             
-            acbal = rs1.getInt("accountbalance");
-            System.out.println(acbal);
+            while(rs2.next() ) {
+            	System.out.println("Inside rs2 next");
+            	pqty = rs2.getInt("qty");
+            	pqty1= pqty1+pqty;
+            }
+            System.out.println(pqty1);
             
+           //get sold stocks
             
-            amt = amt + fees;
-            acbal = acbal + fees; 
+            Integer pqty2 = 0;
+            Integer pqty3 = 0;
+            ResultSet rs3=  statement.executeQuery("select qty from sell where uid = '"+ uid +"' and stock_symbol = '"+ symbol +"'; ");
+            while(rs3.next() ) {
+            	System.out.println("Inside rs3 next");
+            	pqty2 = rs3.getInt("qty");
+            	pqty3= pqty3+pqty2;
+            }
+            System.out.println(pqty3);
             
-            Double balance = null;
-            ResultSet rs=  statement.executeQuery("select balance from users where uid = '"+ uid +"' ");
-            rs.next();
-            balance = rs.getDouble("balance");
-            System.out.println(balance);
-            balance = balance - amt;
-//            statement.executeUpdate("INSERT INTO `user_balance` (`uid`, `balance`) "
-//                    + "VALUES ('" + uid + "','"+ balance +"' )");
-            System.out.println(balance);
-            statement.executeUpdate("Update users set balance= '"+ balance +"' where uid = '"+ uid +"' ");
-            statement.executeUpdate("Update manager set accountbalance = '"+ acbal +"' where mid = '"+ m +"' ");
-            statement.executeUpdate("Update request set flag = 1 where uid = '"+ uid +"' and mid = '"+ m +"' and qty = '"+ qty +"' ");
+            Double balance = 0.0;
+            
+            if (qty <= (pqty1-pqty3)) {
+            
+            	statement.executeUpdate("INSERT INTO `sell` (`id`, `uid`, `stock_symbol`, `qty`, `price`, `amt`, date) "
+                        + "VALUES (NULL,'" + uid + "','" + symbol + "','" + qty + "','" + price + "','" + amt +"', CURRENT_TIMESTAMP() )");
+            	
+            	
+                ResultSet rs=  statement.executeQuery("select balance from users where uid = '"+ uid +"' ");
+                rs.next();
+                balance = rs.getDouble("balance");
+                System.out.println(balance);
+                balance = balance + amt;
+                statement.executeUpdate("Update users set balance= '"+ balance +"' where uid = '"+ uid +"' ");
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully sold stock",""));
+            }
+            else {
+            	FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Not enough stocks to sell....!!!",""));
+            	
+            }
             statement.close();
             conn.close();
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully purchased stock",""));
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "managerpurchase";
+        return "sell";
     }
 
     public void installAllTrustingManager() {
@@ -334,7 +337,7 @@ public class StockApiBean1 {
                             + "<td>" + subJsonObj.getString("5. volume") + "</td>";
                     if (i == 0) {
                         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-                        this.table2Markup += "<td><a class='btn btn-success' href='" + path + "/managerpurchase.xhtml?symbol=" + symbol + "&price=" + subJsonObj.getString("4. close") + "'>Buy Stock</a></td>";
+                        this.table2Markup += "<td><a class='btn btn-success' href='" + path + "/sell.xhtml?symbol=" + symbol + "&price=" + subJsonObj.getString("4. close") + "'>Sell Stock</a></td>";
                     }
                     this.table2Markup += "</tr>";
                     i++;

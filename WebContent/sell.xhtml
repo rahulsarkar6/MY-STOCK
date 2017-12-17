@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Sell Stock</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+		<link rel="stylesheet" type="text/css" href="Bootstrap/css/bootstrap.css"></link>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"></link>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></link>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="css/style.css" ></link>
+
+        <script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+            function calculateAmount() {
+                $("#purchase .amt").val(($("#purchase .purchasePrice").val() * $("#purchase .qty").val()).toFixed(2));
+            }
+        </script>
+    </h:head>
+    <body>
+        <!-- Add your site or application content here -->
+        
+                        
+                            Welcome <h:outputText value="#{sessionScope.username}" />
+                      
+                        <h:form>
+                        <h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
+                        </h:form>
+                  
+                    
+                    <h:form>
+						
+							<br/>
+							
+							<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
+														<font color="blue"></font>
+									
+							<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
+														<font color="blue"></font>
+														
+							<h:commandButton class="btn btn-primary" value="View Managers" action="#{user.checkmanager}"></h:commandButton>
+														<font color="blue"></font>		
+																			
+							<h:commandButton class="btn btn-primary" value="View Account Balance" action="viewuserbalance"></h:commandButton>
+														<font color="blue"></font>
+														
+							<h:commandButton class="btn btn-primary" value="Request Manager" action="requestmanager"></h:commandButton>
+														<font color="blue"></font>
+														
+							<h:commandButton class="btn btn-primary" value="Sell Stock" action="sellstock"></h:commandButton>
+														<font color="blue"></font>
+														
+						</h:form>
+			
+			<div class="container" align="center">
+				<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
+					<div class="jumbotron">
+			
+                    <!-- main column -->
+                    <div class="col-sm-6">
+                        <h:form id="purchase">
+                            <h:messages style="color: red;"/>
+                            Stock Name: <h:inputText binding="#{purchaseSymbol}" id="symbol" styleClass="form-control purchaseSymbol" value="#{stockApiBean2.purchaseSymbol}" required="true"/><br />
+                            Price: <h:inputText binding="#{purchasePrice}" id="price" styleClass="form-control purchasePrice" value="#{stockApiBean2.purchasePrice}" required="true"/><br />
+                            Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean2.qty}" required="true" onkeyup="calculateAmount()"/><br />
+                            Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean2.amt}" required="true"/><br />
+                            <h:commandButton styleClass="btn btn-success btn-login-submit" value="Sell" action="#{stockApiBean2.createDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value)}"/>
+                        </h:form>
+                    </div>
+                    
+                    </div>
+                   </div>
+                  </div>
+                  
+                    
+                    
+                    
+                
+    </body>
+</html>

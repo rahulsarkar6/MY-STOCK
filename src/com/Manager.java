@@ -560,7 +560,7 @@ public String updatedetails() {
 			
 			System.out.println(m);
 			
-			String sql = "select * from request where mid = '"+ m +"'";
+			String sql = "select * from request where mid = '"+ m +"' and flag = 0";
 		
 			//PreparedStatement st = con.prepareStatement(sql);
 			Statement stm=null;

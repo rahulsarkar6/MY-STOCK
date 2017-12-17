@@ -37,6 +37,9 @@
 		<h:commandButton class="btn btn-primary" value="Request Manager" action="requestmanager"></h:commandButton>
 									<font color="blue"><h:messages></h:messages></font>
 									
+		<h:commandButton class="btn btn-primary" value="Sell Stock" action="sellstock"></h:commandButton>
+									<font color="blue"></font>
+									
 	</h:form>
 	
 	
@@ -47,7 +50,7 @@
 				
 				
 			
-						<p>Your Account History : </p>
+						<p>Your Purchase History : </p>
 							<h:form styleClass="form-horizontal" action="#{purchase.purchase}">
 								<h:dataTable value="#{purchase.purchase}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
 											
@@ -69,6 +72,34 @@
 							    			<h:column>    				
 							              		<f:facet name="header">Purchase Amount</f:facet>
 							    				<h:outputText value=" #{m.amt}"></h:outputText>
+							    			</h:column>
+							    			
+											</h:dataTable>
+							</h:form>
+							
+							<br />
+							<p>Your Sell History : </p>
+							<h:form styleClass="form-horizontal" action="#{purchase.sell}">
+								<h:dataTable value="#{purchase.sell}" var= "s" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+											
+											<h:column>    				
+							              		<f:facet name="header">Stock Name</f:facet>
+							    				<h:outputText value=" #{s.stock_symbol}"></h:outputText>
+							    			</h:column>
+											
+											<h:column>    				
+							              		<f:facet name="header">Quantity</f:facet>
+							    				<h:outputText value=" #{s.qty}"></h:outputText>
+							    			</h:column>		
+							            	
+							            	<h:column>    				
+							              		<f:facet name="header">Sell Date</f:facet>
+							    				<h:outputText value=" #{s.date}"></h:outputText>
+							    			</h:column>
+							    			
+							    			<h:column>    				
+							              		<f:facet name="header">Sell Amount</f:facet>
+							    				<h:outputText value=" #{s.amt}"></h:outputText>
 							    			</h:column>
 							    			
 											</h:dataTable>
