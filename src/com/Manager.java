@@ -20,8 +20,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-
-import com.SessionUtils;
 import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 
 import javafx.scene.control.Alert;
@@ -42,6 +40,7 @@ public class Manager implements Serializable {
     
     List<Manager> mgr= new ArrayList<Manager>();
     List<User> user = new ArrayList<User>();
+    List<User> user1 = new ArrayList<User>();
    
 
 
@@ -187,7 +186,7 @@ public class Manager implements Serializable {
 //    	
 //			con = ds.getConnection();
     		
-    		String sql = "insert into manager(name,emailid,username,password,company) values(?,?,?,?,?)";
+    		String sql = "insert into manager(name,emailid,username,password,company,fees) values(?,?,?,?,?,?)";
 			
 
 			// Get a prepared SQL statement
@@ -198,6 +197,7 @@ public class Manager implements Serializable {
 			st.setString(3, this.username);
 			st.setString(4, this.password);
 			st.setString(5, this.company);
+			st.setInt(6, this.fees);
 			// Execute the statement
 			st.executeUpdate();
 			FacesContext.getCurrentInstance().addMessage(
@@ -278,7 +278,7 @@ public class Manager implements Serializable {
     public String logout() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
-		return "Loginmanager";
+		return "index";
 	}
     
     
@@ -588,8 +588,85 @@ public String updatedetails() {
 			
 			return user;
 			}
-	    
+
+
+
+	public List<User> getUser1() throws SQLException{
+		
+		
+		Connection con = null;
+		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+		ds.setServerName(System.getenv("ICSI518_SERVER"));
+		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+		ds.setUser(System.getenv("ICSI518_USER").toString());
+		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+		
+		
+		con = ds.getConnection();
+
+
+		System.out.println("Hello in showrequest");
+		
+		
+		Integer m = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("mid"));
+		
+		System.out.println(m);
+		
+		String sql = "select * from requestsell where mid = '"+ m +"' and flag = 0";
+	
+		//PreparedStatement st = con.prepareStatement(sql);
+		Statement stm=null;
+		stm=(Statement) con.createStatement();
+	
+	
+	
+	
+		ResultSet rs=stm.executeQuery(sql);
+		user1.clear();
+		while(rs.next())
+		{
+			User u=new User();
+			u.setUid(rs.getString("uid"));
+			u.setQty(rs.getInt("qty"));
+			
+			
+			//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+			user1.add(u);
+			
 		}
+		con.close();
+		stm.close();
+	
+		
+		
+		return user1;
+	}
+	 
+	 
+	public Double viewbalance() {
+		Connection con = DBConnection.createConnection();
+		Double balance = 0.0;
+		try {
+			
+			String sql = "Select accountbalance from manager where username = ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, this.username);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			 balance =  rs.getDouble("accountbalance");
+			
+		}catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		}
+		return balance;
+	}
+	 
+	 
+	    
+}
 
 	
 		

@@ -316,7 +316,7 @@ public class User implements Serializable {
 	public String logout() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
-		return "Login";
+		return "index";
 	}
 
 
@@ -519,6 +519,72 @@ public String assignmanager() {
 		return "requestmanager";
 		
     }
+	
+public String requestsell() {
+    	
+
+		
+    	Connection con = DBConnection.createConnection();
+    	try {
+    		
+
+    		
+//    		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//			ds.setServerName(System.getenv("ICSI518_SERVER"));
+//			ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//			ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//			ds.setUser(System.getenv("ICSI518_USER").toString());
+//			ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+    	
+//			con = ds.getConnection();
+    		
+    		
+    		Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("uid"));
+    		
+    		Integer mid = null;
+    		String sql1 = "select mid from users where uid = '"+ uid +"' ";
+    		PreparedStatement ps = con.prepareStatement(sql1);
+    		ResultSet rs = ps.executeQuery();
+    		rs.next();
+    		mid = rs.getInt("mid");
+    		String sql = "insert into requestsell(uid,mid,qty) values(?,?,?)";
+			
+
+			// Get a prepared SQL statement
+			
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, uid);
+			st.setInt(2, mid);
+			st.setInt(3, this.qty);
+			
+			
+			// Execute the statement
+			st.executeUpdate();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Sell Stock Requested Successfully",
+							"Please enter username and Password to login"));
+			return "requestmanager";
+			
+			
+		} catch (Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "requestmanagersell";
+		
+    }
+	
+	
+	
 	
     
 }

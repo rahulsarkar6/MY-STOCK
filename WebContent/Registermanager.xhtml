@@ -27,7 +27,7 @@
 								
                                 <div class="form-group">
 								<h:outputText value="name" styleClass="control-label col-sm-2">Name</h:outputText>
-								<h:inputText id="name" value="#{manager.name}" styleClass="form-control" required="true" requiredMessage="Please enter name">
+								<h:inputText id="Name" value="#{manager.name}" styleClass="form-control" required="true" requiredMessage="Please enter name">
 									<f:validateRegex pattern = "[a-zA-Z]+" />
 								</h:inputText>
 								<h:message for="name"></h:message>
@@ -47,7 +47,15 @@
 								</h:inputText>
 								<h:message for="company"></h:message>
 								</div>
-                                                                
+                                       
+                                <div class="form-group">
+								<h:outputText value="fees" styleClass="control-label col-sm-2">Fees</h:outputText>
+								<h:inputText id="Fees" value="#{manager.fees}" styleClass="form-control" required="true" requiredMessage="Please enter your fees">
+								</h:inputText>
+								<h:message for="company"></h:message>
+								</div>
+                                
+                                                         
                                 <div class="form-group">
 								<h:outputText value="Username" styleClass="control-label col-sm-2">Username</h:outputText>
 								<h:inputText id="username" value="#{manager.username}" styleClass="form-control" required="true" requiredMessage="Please enter username"></h:inputText>

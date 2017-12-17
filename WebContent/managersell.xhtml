@@ -42,29 +42,43 @@
 						
 							<br/>
 							
-							<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
-														<font color="blue"></font>
+							<h:commandButton class="btn btn-primary" value="Home" action="managerdashboard"></h:commandButton>
+									<font color="blue"></font>
 									
-							<h:commandButton class="btn btn-primary" value="Update Profile" action="profile"></h:commandButton>
+							<h:commandButton class="btn btn-primary" value="Update Profile" action="managerprofileupdate"></h:commandButton>
 														<font color="blue"></font>
 														
-							<h:commandButton class="btn btn-primary" value="View Managers" action="#{user.checkmanager}"></h:commandButton>
-														<font color="blue"></font>		
-																			
-							<h:commandButton class="btn btn-primary" value="View Account Balance" action="viewuserbalance"></h:commandButton>
-														<font color="blue"></font>
-														
-							<h:commandButton class="btn btn-primary" value="Request Purchase" action="requestmanager"></h:commandButton>
+							<h:commandButton class="btn btn-primary" value="Client Purchase Requests" action="clientrequest"></h:commandButton>
 														<font color="blue"></font>
 							
-							<h:commandButton class="btn btn-primary" value="Request Sell" action="requestmanagersell"></h:commandButton>
-														<font color="blue"></font>
-														
-							<h:commandButton class="btn btn-primary" value="Sell Stock" action="sellstock"></h:commandButton>
+							<h:commandButton class="btn btn-primary" value="Client Sell Requests" action="clientrequestsell"></h:commandButton>
 														<font color="blue"></font>
 														
 						</h:form>
 			
+			<div class="container" align="center">
+				<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
+					<div class="jumbotron">
+							<h2>Request Details</h2>
+							<h:form styleClass="form-horizontal" >
+												<h:dataTable value="#{manager.user1}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+													
+													<h:column>    				
+									              		<f:facet name="header">User Id</f:facet>
+									    				<h:outputText value=" #{m.uid}"></h:outputText>
+									    			</h:column>
+													
+													<h:column>    				
+									              		<f:facet name="header">Stock Quantity</f:facet>
+									    				<h:outputText value=" #{m.qty}"></h:outputText>
+									    			</h:column>		
+									     
+									     </h:dataTable>
+											
+									</h:form>
+					</div>
+				</div>
+			</div>
 			<div class="container" align="center">
 				<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
 					<div class="jumbotron">
@@ -73,17 +87,19 @@
                     <div class="col-sm-6">
                         <h:form id="purchase">
                             <h:messages style="color: red;"/>
-                            Stock Name: <h:inputText binding="#{purchaseSymbol}" id="symbol" styleClass="form-control purchaseSymbol" value="#{stockApiBean2.purchaseSymbol}" required="true"/><br />
-                            Price: <h:inputText binding="#{purchasePrice}" id="price" styleClass="form-control purchasePrice" value="#{stockApiBean2.purchasePrice}" required="true"/><br />
-                            Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean2.qty}" required="true" onkeyup="calculateAmount()"/><br />
-                            Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean2.amt}" required="true"/><br />
-                            <h:commandButton styleClass="btn btn-success btn-login-submit" value="Sell" action="#{stockApiBean2.createDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value)}"/>
+                            Stock Name: <h:inputText binding="#{purchaseSymbol}" id="symbol" styleClass="form-control purchaseSymbol" value="#{stockApiBean3.purchaseSymbol}" required="true"/><br />
+                            Price: <h:inputText binding="#{purchasePrice}" id="price" styleClass="form-control purchasePrice" value="#{stockApiBean3.purchasePrice}" required="true"/><br />
+                            Quantity: <h:inputText binding="#{qty}" id="qty" styleClass="form-control qty" value="#{stockApiBean3.qty}" required="true" onkeyup="calculateAmount()"/><br />
+                            Amount: <h:inputText binding="#{amt}" id="amt" styleClass="form-control amt" value="#{stockApiBean3.amt}" required="true"/><br />
+                            User ID: <h:inputText binding="#{uid}" id="uid" styleClass="form-control amt" value="#{stockApiBean3.uid}" required="true"/><br />
+                            <h:commandButton styleClass="btn btn-success btn-login-submit" value="Sell" action="#{stockApiBean3.createDbRecord(purchaseSymbol.value, purchasePrice.value, qty.value, amt.value, uid.value)}"/>
                         </h:form>
                     </div>
                     
                     </div>
                    </div>
                   </div>
+      
                   
                     
                     
