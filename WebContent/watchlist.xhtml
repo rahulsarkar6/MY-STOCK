@@ -20,8 +20,8 @@
 	<h:form>
 		<h:commandButton class="btn btn-primary" style="float:right;" action="#{user.logout}" value="Logout"></h:commandButton>
 		<p>Welcome #{user.name}</p>
-		<br/>
 		
+		<br/>
 		<h:commandButton class="btn btn-primary" value="Home" action="welcome"></h:commandButton>
 									<font color="blue"></font>
 									
@@ -39,78 +39,66 @@
 									
 		<h:commandButton class="btn btn-primary" value="Request Sell" action="requestmanagersell"></h:commandButton>
 									<font color="blue"></font>
-		
+									
 		<h:commandButton class="btn btn-primary" value="Sell Stock" action="sellstock"></h:commandButton>
 									<font color="blue"></font>
-		
+									
 		<h:commandButton class="btn btn-primary" value="Watchlist" action="watchlist"></h:commandButton>
-									<font color="blue"></font>												
+									<font color="blue"></font>
+									
 	</h:form>
-	
 	
 	<div class="container" align="center">
 		<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
 			<div class="jumbotron">
-				
-				
-							<h:form styleClass="form-horizontal" action="#{manager.showmanager}">
-								<h:dataTable value="#{manager.showmanager}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
-											
-											<h:column>    				
-							              		<f:facet name="header">Manager Id</f:facet>
-							    				<h:outputText value=" #{m.mid}"></h:outputText>
-							    			</h:column>
-											
-											<h:column>    				
-							              		<f:facet name="header">Name</f:facet>
-							    				<h:outputText value=" #{m.name}"></h:outputText>
-							    			</h:column>		
-							            	
-							            	<h:column>    				
-							              		<f:facet name="header">Email Id</f:facet>
-							    				<h:outputText value=" #{m.emailid}"></h:outputText>
-							    			</h:column>
-							    			
-							    			<h:column>    				
-							              		<f:facet name="header">Company</f:facet>
-							    				<h:outputText value=" #{m.company}"></h:outputText>
-							    			</h:column>
-							    			
-							    			<h:column>    				
-							              		<f:facet name="header">Fees</f:facet>
-							    				<h:outputText value=" #{m.fees}"></h:outputText>
-							    			</h:column>
-							    			
-											</h:dataTable>
-											
-											
-							</h:form>
-				<br />
-				<br />
-				<h:form styleClass="form-horizontal" action="{user.userdetails}">
-							
+	
+					<div class="well">
+		                <legend>Search Data</legend>
 		
-								<p>Quantity of Stock: <h:inputText value="#{user.qty}"></h:inputText></p>
-								
-								<h:commandButton action="#{user.requestsell}"
-									class="btn btn-primary" value="Request"></h:commandButton>
-									<font color="blue"><h:messages></h:messages></font>
+		                <div class="row">
+		
+		                    <h:form>
+		                        <label for="sel1">Stock: </label>
+		                        <h:selectOneMenu id="symbol" value="#{stockApiBean.selectedSymbol}">
+		                            <f:selectItems value="#{stockApiBean.availableSymbols}" />
+		                        </h:selectOneMenu>
+		
+		                        
+		                        <br />
+		                        <h:commandButton value="Add to Watch List" action="#{stockApiBean.timeseries1}" styleClass="btn btn-success" />
+		                        
+		                    </h:form>
+		                    
+		                    
+		                    
+		                </div>
+		
+		            </div>
+         	 </div>
+       	</div>
+     </div>
+   		
+   		<div class="container" align="center">
+			<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
+				<div class="jumbotron">
+	
+   
+   							<p>Stock Watchlist : </p>
+							<h:form styleClass="form-horizontal" action="#{purchase.watch}">
+								<h:dataTable value="#{purchase.watch}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+											
+											<h:column>    				
+							              		<f:facet name="header">Stock Name</f:facet>
+							    				<h:outputText value=" #{m.stock_symbol}"></h:outputText>
+							    			</h:column>
+											
+												
+											</h:dataTable>
 							</h:form>
-			
-			
-			</div>
-		</div>
-	</div>
-	
-	</h:body>
+   				</div>
+   			</div>
+   		</div>
+   
+   
+</h:body>
 </html>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<title>Welcome Manager</title>
@@ -32,12 +33,95 @@
 		<h:commandButton class="btn btn-primary" value="Client Sell Requests" action="clientrequestsell"></h:commandButton>
 									<font color="blue"></font>
 									
+		<h:commandButton class="btn btn-primary" value="Watchlist" action="managerwatchlist"></h:commandButton>
+									<font color="blue"></font>
+									
 	</h:form>
 	
 	<div class="container" align="center">
 		<div class="col-sm-10" style="width: 800px; margin-left: 250; margin-top:20px">
 			<div class="jumbotron">
 				<p>Your current Account Balance is : #{manager.viewbalance()}</p>
+				
+				
+				
+				
+				
+				<p>Your Purchase History : </p>
+							<h:form styleClass="form-horizontal" action="#{purchase.purchasem}">
+								<h:dataTable value="#{purchase.purchasem}" var= "m" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+											
+											<h:column>    				
+							              		<f:facet name="header">Stock Name</f:facet>
+							    				<h:outputText value=" #{m.stock_symbol}"></h:outputText>
+							    			</h:column>
+											
+											<h:column>    				
+							              		<f:facet name="header">User Id</f:facet>
+							    				<h:outputText value=" #{m.uid}"></h:outputText>
+							    			</h:column>
+							    			
+											<h:column>    				
+							              		<f:facet name="header">Quantity</f:facet>
+							    				<h:outputText value=" #{m.qty}"></h:outputText>
+							    			</h:column>		
+							            	
+							            	<h:column>    				
+							              		<f:facet name="header">Purchase Date</f:facet>
+							    				<h:outputText value=" #{m.date}"></h:outputText>
+							    			</h:column>
+							    			
+							    			<h:column>    				
+							              		<f:facet name="header">Purchase Amount</f:facet>
+							    				<h:outputText value=" #{m.amt}"></h:outputText>
+							    			</h:column>
+							    			
+											</h:dataTable>
+							</h:form>
+							
+							
+					<br />
+							<p>Your Sell History : </p>
+							<h:form styleClass="form-horizontal" action="#{purchase.sellm}">
+								<h:dataTable value="#{purchase.sellm}" var= "s" styleClass="order-table" headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" border="1">
+											
+											<h:column>    				
+							              		<f:facet name="header">Stock Name</f:facet>
+							    				<h:outputText value=" #{s.stock_symbol}"></h:outputText>
+							    			</h:column>
+											
+											<h:column>    				
+							              		<f:facet name="header">User Id</f:facet>
+							    				<h:outputText value=" #{s.uid}"></h:outputText>
+							    			</h:column>
+											
+											<h:column>    				
+							              		<f:facet name="header">Quantity</f:facet>
+							    				<h:outputText value=" #{s.qty}"></h:outputText>
+							    			</h:column>		
+							            	
+							            	<h:column>    				
+							              		<f:facet name="header">Sell Date</f:facet>
+							    				<h:outputText value=" #{s.date}"></h:outputText>
+							    			</h:column>
+							    			
+							    			<h:column>    				
+							              		<f:facet name="header">Sell Amount</f:facet>
+							    				<h:outputText value=" #{s.amt}"></h:outputText>
+							    			</h:column>
+							    			
+											</h:dataTable>
+							</h:form>
+					
+					
+					
+					
+					
+					
+							
+							
+							
+							
 			</div>
 		</div>
 	</div>

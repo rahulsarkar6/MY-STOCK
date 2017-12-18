@@ -215,7 +215,231 @@ public class Purchase implements Serializable {
 	}
 
 	
+	public List<Purchase> getPurchasem() throws SQLException {
+		mgr.clear();
+
+		Connection con = DBConnection.createConnection();
+//		Connection con = null;
+//		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//		ds.setServerName(System.getenv("ICSI518_SERVER"));
+//		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//		ds.setUser(System.getenv("ICSI518_USER").toString());
+//		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+//		
+//		
+//		con = ds.getConnection();
+
 	
+	
+	
+	
+	//con = ds.getConnection();
+		System.out.println("Hello in Purchase");
+		Integer m = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("mid"));
+		System.out.println(m);
+		
+	String sql = "select * from purchase where mid = '"+ m +"' ";
+	
+	//PreparedStatement st = con.prepareStatement(sql);
+	Statement stm=null;
+	stm=(Statement) con.createStatement();
+	
+	
+	
+	
+	ResultSet rs=stm.executeQuery(sql);
+	while(rs.next())
+	{
+		Purchase p=new Purchase();
+		p.setAmt(rs.getDouble("amt"));
+		p.setPrice(rs.getDouble("price"));
+		p.setStock_symbol(rs.getString("stock_symbol"));
+		p.setQty(rs.getInt("qty"));
+		p.setDate(rs.getDate("date"));
+		p.setUid(rs.getInt("uid"));
+		
+		
+		//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+		mgr.add(p);
+		
+	}
+	con.close();
+	stm.close();
+	
+	
+	return mgr;
+	}
+	
+	
+	public List<Purchase> getSellm() throws SQLException {
+		mgr.clear();
+
+		Connection con = DBConnection.createConnection();
+//		Connection con = null;
+//		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//		ds.setServerName(System.getenv("ICSI518_SERVER"));
+//		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//		ds.setUser(System.getenv("ICSI518_USER").toString());
+//		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+//		
+//		
+//		con = ds.getConnection();
+
+	
+	
+	
+	
+	//con = ds.getConnection();
+		System.out.println("Hello in Sell");
+		Integer m = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("mid"));
+		System.out.println(m);
+		
+	String sql = "select * from sell where mid = '"+ m +"' ";
+	
+	//PreparedStatement st = con.prepareStatement(sql);
+	Statement stm=null;
+	stm=(Statement) con.createStatement();
+	
+	
+	
+	
+	ResultSet rs=stm.executeQuery(sql);
+	while(rs.next())
+	{
+		Purchase p=new Purchase();
+		p.setAmt(rs.getDouble("amt"));
+		p.setPrice(rs.getDouble("price"));
+		p.setStock_symbol(rs.getString("stock_symbol"));
+		p.setQty(rs.getInt("qty"));
+		p.setDate(rs.getDate("date"));
+		p.setUid(rs.getInt("uid"));
+		
+		//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+		mgr.add(p);
+		
+	}
+	con.close();
+	stm.close();
+	
+	
+	return mgr;
+	}
+	
+	public List<Purchase> getWatch() throws SQLException {
+		mgr.clear();
+
+		Connection con = DBConnection.createConnection();
+//		Connection con = null;
+//		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//		ds.setServerName(System.getenv("ICSI518_SERVER"));
+//		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//		ds.setUser(System.getenv("ICSI518_USER").toString());
+//		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+//		
+//		
+//		con = ds.getConnection();
+
+	
+	
+	
+	
+	//con = ds.getConnection();
+		System.out.println("Hello in Watchlist");
+		Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("uid"));
+		System.out.println(uid);
+		
+	String sql = "select distinct(stock_symbol) from watchlist where uid = '"+ uid +"' ";
+	
+	//PreparedStatement st = con.prepareStatement(sql);
+	Statement stm=null;
+	stm=(Statement) con.createStatement();
+	
+	
+	
+	
+	ResultSet rs=stm.executeQuery(sql);
+	while(rs.next())
+	{
+		Purchase p=new Purchase();
+		
+		p.setStock_symbol(rs.getString("stock_symbol"));
+		
+		
+		
+		//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+		mgr.add(p);
+		
+	}
+	con.close();
+	stm.close();
+	
+	
+	return mgr;
+	}
+	
+	public List<Purchase> getWatch1() throws SQLException {
+		mgr.clear();
+
+		Connection con = DBConnection.createConnection();
+//		Connection con = null;
+//		com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+//		ds.setServerName(System.getenv("ICSI518_SERVER"));
+//		ds.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+//		ds.setDatabaseName(System.getenv("ICSI518_DB").toString());
+//		ds.setUser(System.getenv("ICSI518_USER").toString());
+//		ds.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+//		
+//		
+//		con = ds.getConnection();
+
+	
+	
+	
+	
+	//con = ds.getConnection();
+		System.out.println("Hello in Watchlist");
+		Integer mid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap().get("mid"));
+		System.out.println(mid);
+		
+	String sql = "select distinct(stock_symbol) from watchlist where mid = '"+ mid +"' ";
+	
+	//PreparedStatement st = con.prepareStatement(sql);
+	Statement stm=null;
+	stm=(Statement) con.createStatement();
+	
+	
+	
+	
+	ResultSet rs=stm.executeQuery(sql);
+	while(rs.next())
+	{
+		Purchase p=new Purchase();
+		
+		p.setStock_symbol(rs.getString("stock_symbol"));
+		
+		
+		
+		//System.out.println(rs.getInt("id")+" " +rs.getString("name"));
+		mgr.add(p);
+		
+	}
+	con.close();
+	stm.close();
+	
+	
+	return mgr;
+	}
 	
 	
 	

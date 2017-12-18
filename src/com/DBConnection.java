@@ -22,12 +22,20 @@ public class DBConnection implements Serializable{
 			{
 				//System.out.println("Inside Connection");
 				com.mysql.jdbc.jdbc2.optional.MysqlDataSource db = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
-				db.setServerName(SERVER);
-				db.setPort(PORT);
-				db.setDatabaseName(DB);
-				db.setUser(USER);
-				db.setPassword(PASSWORD);
-
+//				db.setServerName(SERVER);
+//				db.setPort(PORT);
+//				db.setDatabaseName(DB);
+//				db.setUser(USER);
+//				db.setPassword(PASSWORD);
+				
+				db.setServerName(System.getenv("ICSI518_SERVER"));
+				db.setPortNumber(Integer.parseInt(System.getenv("ICSI518_PORT")));
+				db.setDatabaseName(System.getenv("ICSI518_DB").toString());
+				db.setUser(System.getenv("ICSI518_USER").toString());
+				db.setPassword(System.getenv("ICSI518_PASSWORD").toString());
+				
+				
+				
 				connection = db.getConnection();
 				
 			} 

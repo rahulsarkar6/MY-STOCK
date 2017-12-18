@@ -266,7 +266,7 @@ public class StockApiBean {
         JsonObject mainJsonObj = jsonReader.readObject();
         for (String key : mainJsonObj.keySet()) {
             if (key.equals("Meta Data")) {
-                this.table1Markup = null; // reset table 1 markup before repopulating
+                this.table1Markup = "-->"; // reset table 1 markup before repopulating
                 JsonObject jsob = (JsonObject) mainJsonObj.get(key);
                 this.table1Markup += "<style>#detail >tbody > tr > td{ text-align:center;}</style><b>Stock Details</b>:<br>";
                 this.table1Markup += "<table>";
@@ -278,7 +278,7 @@ public class StockApiBean {
                 this.table1Markup += "<tr><td>Time Zone</td><td>" + jsob.getString("6. Time Zone") + "</td></tr>";
                 this.table1Markup += "</table>";
             } else {
-                this.table2Markup = null; // reset table 2 markup before repopulating
+                this.table2Markup = ""; // reset table 2 markup before repopulating
                 JsonObject dataJsonObj = mainJsonObj.getJsonObject(key);
                 this.table2Markup += "<table class='table table-hover'>";
                 this.table2Markup += "<thead><tr><th>Timestamp</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr></thead>";
@@ -313,4 +313,81 @@ public class StockApiBean {
         System.out.println("stockPrice" + FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("stockPrice"));
         return;
     }
+    
+    public void timeseries1() throws MalformedURLException, IOException {
+
+        installAllTrustingManager();
+
+        //System.out.println("selectedItem: " + this.selectedSymbol);
+        //System.out.println("selectedInterval: " + this.selectedInterval);
+        String symbol = this.selectedSymbol;
+        String interval = this.selectedInterval;
+        try {
+        	
+        	Connection conn = DBConnection.createConnection();
+            Statement statement = conn.createStatement();;
+    		
+            
+            //get userid
+            Integer uid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("uid"));
+            
+            System.out.println(uid);
+            System.out.println("symbol:" + symbol);
+           
+            statement.executeUpdate("INSERT INTO `watchlist` ( `uid`, `stock_symbol`) "
+                    + "VALUES ('" + uid + "','" + symbol + "')");
+        	
+            statement.close();
+            conn.close();
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully added stock to Watchlist",""));
+        	
+        	
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return ;
+    }
+    
+    
+    public void timeseries2() throws MalformedURLException, IOException {
+
+        installAllTrustingManager();
+
+        //System.out.println("selectedItem: " + this.selectedSymbol);
+        //System.out.println("selectedInterval: " + this.selectedInterval);
+        String symbol = this.selectedSymbol;
+        
+        try {
+        	
+        	Connection conn = DBConnection.createConnection();
+            Statement statement = conn.createStatement();;
+    		
+            
+            //get userid
+            Integer mid = Integer.parseInt((String) FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .getSessionMap().get("mid"));
+            
+            System.out.println(mid);
+            System.out.println("symbol:" + symbol);
+           
+            statement.executeUpdate("INSERT INTO `watchlist` ( `mid`, `stock_symbol`) "
+                    + "VALUES ('" + mid + "','" + symbol + "')");
+        	
+            statement.close();
+            conn.close();
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully added stock to Watchlist",""));
+        	
+        	
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return ;
+    }
+    
+    
 }

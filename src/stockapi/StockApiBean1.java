@@ -304,7 +304,7 @@ public class StockApiBean1 {
         JsonObject mainJsonObj = jsonReader.readObject();
         for (String key : mainJsonObj.keySet()) {
             if (key.equals("Meta Data")) {
-                this.table1Markup = null; // reset table 1 markup before repopulating
+                this.table1Markup = "-->"; // reset table 1 markup before repopulating
                 JsonObject jsob = (JsonObject) mainJsonObj.get(key);
                 this.table1Markup += "<style>#detail >tbody > tr > td{ text-align:center;}</style><b>Stock Details</b>:<br>";
                 this.table1Markup += "<table>";
@@ -316,7 +316,7 @@ public class StockApiBean1 {
                 this.table1Markup += "<tr><td>Time Zone</td><td>" + jsob.getString("6. Time Zone") + "</td></tr>";
                 this.table1Markup += "</table>";
             } else {
-                this.table2Markup = null; // reset table 2 markup before repopulating
+                this.table2Markup = ""; // reset table 2 markup before repopulating
                 JsonObject dataJsonObj = mainJsonObj.getJsonObject(key);
                 this.table2Markup += "<table class='table table-hover'>";
                 this.table2Markup += "<thead><tr><th>Timestamp</th><th>Open</th><th>High</th><th>Low</th><th>Close</th><th>Volume</th></tr></thead>";
